@@ -1,3 +1,13 @@
+# -*- coding: UTF-8 -*-
+
+# @Date    : 2019/10/13
+# @Author  : WANG JINGE
+# @Email   : wang.j.au@m.titech.ac.jp
+# @Language: python 3.7
+"""
+    main function of flask
+"""
+
 from flask import Flask, request, make_response, redirect, url_for, jsonify
 
 import csv
@@ -16,6 +26,8 @@ ALLOWED_EXTENSIONS = set(['csv'])
 app = Flask(__name__, static_url_path='')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 @app.route('/')
 def index():
@@ -220,10 +232,3 @@ def mlclusterop(action):
 def mlmodel(type):
     return json.dumps(getModelType(type))
 
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
-
-if __name__ == '__main__':
-    app.debug = True
-    app.run()
