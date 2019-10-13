@@ -34,7 +34,7 @@ class Cluster(BaseModel):
 
         predict_train = self.predict(self._features)
 
-        for i in xrange(0, len(self._features)):
+        for i in range(0, len(self._features)):
             item = dict()
             item["x"] = self._features[i][0]
             item["y"] = self._features[i][1]
@@ -42,30 +42,30 @@ class Cluster(BaseModel):
             result["data"].append(item)
 
         # TODO leverage pandas to do this?
-        range = dict()
-        range["xmin"] = self._features[0][0]
-        range["xmax"] = self._features[0][0]
+        range_d = dict()
+        range_d["xmin"] = self._features[0][0]
+        range_d["xmax"] = self._features[0][0]
 
-        range["ymin"] = self._features[0][1]
-        range["ymax"] = self._features[0][1]
+        range_d["ymin"] = self._features[0][1]
+        range_d["ymax"] = self._features[0][1]
 
         for item in self._features:
-            if item[0] > range["xmax"]:
-                range["xmax"] = item[0]
-            if item[0] < range["xmin"]:
-                range["xmin"] = item[0]
-            if item[1] > range["ymax"]:
-                range["ymax"] = item[1]
-            if item[1] < range["ymin"]:
-                range["ymin"] = item[1]
+            if item[0] > range_d["xmax"]:
+                range_d["xmax"] = item[0]
+            if item[0] < range_d["xmin"]:
+                range_d["xmin"] = item[0]
+            if item[1] > range_d["ymax"]:
+                range_d["ymax"] = item[1]
+            if item[1] < range_d["ymin"]:
+                range_d["ymin"] = item[1]
 
-        xstep = (float(range["xmax"]) - float(range["xmin"])) / scale
-        ystep = (float(range["ymax"]) - float(range["ymin"])) / scale
+        xstep = (float(range_d["xmax"]) - float(range_d["xmin"])) / scale
+        ystep = (float(range_d["ymax"]) - float(range_d["ymin"])) / scale
 
-        for x in xrange(0, scale):
-            dx = range["xmin"] + x * xstep
-            dy = range["ymin"]
-            for y in xrange(0, scale):
+        for x in range(0, scale):
+            dx = range_d["xmin"] + x * xstep
+            dy = range_d["ymin"]
+            for y in range(0, scale):
                 dy = dy + ystep
                 onePredict = self.predict([[dx, dy]])
                 record = dict()
